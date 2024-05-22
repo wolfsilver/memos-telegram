@@ -18,4 +18,4 @@ RUN cd /root \
 
 
 # ENTRYPOINT ["memogram"]
-CMD ['memogram']
+CMD ['/root/memogram']
