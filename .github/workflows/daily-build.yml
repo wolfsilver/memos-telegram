@@ -98,7 +98,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref
+            type=ref,event=branch
             ${{steps.get_update.outputs.tag}}
           flavor: |
             latest=true
