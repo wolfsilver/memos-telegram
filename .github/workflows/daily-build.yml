@@ -62,6 +62,7 @@ jobs:
       - name: test
         run: |
           echo ${{steps.get_update.outputs.update}}
+          echo ${{steps.get_update.outputs.tag}}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -97,6 +98,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            type=ref
             ${{steps.get_update.outputs.tag}}
           flavor: |
             latest=true
