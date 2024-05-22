@@ -20,4 +20,4 @@ RUN set -x ; apk add --no-cache libc6-compat \
 ENV PATH="/root:${PATH}"
 
 # ENTRYPOINT ["memogram"]
-CMD ['memogram']
+CMD ["memogram"]
