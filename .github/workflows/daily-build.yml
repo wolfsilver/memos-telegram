@@ -14,6 +14,11 @@ on:
     # schedule build every night
     - cron: "0 19 * * *"
   workflow_dispatch:
+    inputs:
+      base-repo:
+        default: 'usememos'
+        description: 'input base-repo'
+        required: true
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -42,7 +47,7 @@ jobs:
       - name: Check update
         id: get_update
         run: |
-          latest=$(curl "https://api.github.com/repos/usememos/telegram-integration/releases/latest" -s | jq '.tag_name')
+          latest=$(curl "https://api.github.com/repos/${{ inputs.base-repo }}/telegram-integration/releases/latest" -s | jq '.tag_name')
           # echo $latest
           # version 文件不存在或者与repo中的文件version进行比较
           if [ ! -f version ] || [ "$latest" != "$(cat version)" ]; then
@@ -116,6 +121,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: BASE_URL=https://github.com/${{ inputs.base-repo }}/telegram-integration
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
