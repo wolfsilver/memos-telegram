@@ -49,6 +49,7 @@ jobs:
         run: |
           latest=$(curl "https://api.github.com/repos/${{ inputs.base-repo }}/telegram-integration/releases/latest" -s | jq '.tag_name')
           # echo $latest
+          latest=${latest//\"}
           # version 文件不存在或者与repo中的文件version进行比较
           if [ ! -f version ] || [ "$latest" != "$(cat version)" ]; then
             echo $latest > version
