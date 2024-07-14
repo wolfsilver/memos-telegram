@@ -44,10 +44,18 @@ jobs:
         with:
           token: ${{ secrets.TOKEN }}
 
+      # 从inputs.base-repo中获取值，然后写入到GITHUB_ENV中，默认值为usememos
+      - name: set baseRepo
+        run: |
+          if [ -z "${{ inputs.base-repo }}" ]; then
+            echo "baseRepo=usememos" >> $GITHUB_ENV
+          else
+            echo "baseRepo=${{ inputs.base-repo }}" >> $GITHUB_ENV
+
       - name: Check update
         id: get_update
         run: |
-          latest=$(curl "https://api.github.com/repos/${{ inputs.base-repo }}/telegram-integration/releases/latest" -s | jq '.tag_name')
+          latest=$(curl "https://api.github.com/repos/${{ env.baseRepo }}/telegram-integration/releases/latest" -s | jq '.tag_name')
           # echo $latest
           latest=${latest//\"}
           # version 文件不存在或者与repo中的文件version进行比较
@@ -123,7 +131,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            BASE_URL=https://github.com/${{ inputs.base-repo }}/telegram-integration
+            BASE_URL=https://github.com/${{ env.baseRepo }}/telegram-integration
             VERSION=${{steps.get_update.outputs.tag}}
 
       # Sign the resulting Docker image digest except on PRs.
