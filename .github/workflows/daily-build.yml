@@ -51,6 +51,7 @@ jobs:
             echo "baseRepo=usememos" >> $GITHUB_ENV
           else
             echo "baseRepo=${{ inputs.base-repo }}" >> $GITHUB_ENV
+          fi
 
       - name: Check update
         id: get_update
