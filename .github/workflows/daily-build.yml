@@ -10,9 +10,9 @@ on:
     # branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
-  # schedule:
-  #   # schedule build every night
-  #   - cron: "0 19 * * *"
+  schedule:
+    # schedule build every night
+    - cron: "0 19 * * *"
   workflow_dispatch:
     inputs:
       base-repo:
