@@ -115,6 +115,7 @@ jobs:
           tags: |
             type=ref,event=branch
             ${{steps.get_update.outputs.tag}}
+            type=raw,value=${{ env.baseRepo }}
           flavor: |
             latest=true
 
